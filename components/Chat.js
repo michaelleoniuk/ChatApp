@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Bubble, GiftedChat } from "react-native-gifted-chat";
 import { Platform, KeyboardAvoidingView } from "react-native";
+import { addDoc, collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 
-const Chat = ({ route, navigation }) => {
+const Chat = ({ route, navigation, db }) => {
   const username = route.params.name;
   const color = route.params.color;
 
@@ -14,30 +15,28 @@ const Chat = ({ route, navigation }) => {
 
   useEffect(() => {
     navigation.setOptions({ title: username });
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello Developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React User',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-      {
-        _id: 2,
-        text: 'System message',
-        createdAt: new Date(),
-        system: true,
-      },
-    ])
+
+    const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
+    const message = onSnapshot(q,
+       (documentSnapshot) => {
+        let newMessages = [];
+        documentSnapshot.forEach(doc => {
+           newMessages.push({ id: doc.id, ...doc.data(), createdAt: new Date(doc.data().createdAt.toMillis())})
+        });
+        setMessages(newMessages);
+       })
+
+       return () => {
+         if( message ) message();
+       };
+
   }, []);
 
   // Send a message function
 
   const onSend = (newMessages) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages));
+    GiftedChat.append(previousMessages, newMessages))
+    addDoc(collection(db, "messages"), newMessages[0])
   }
   // Function to change the background color of the messages
   
@@ -61,7 +60,7 @@ const Chat = ({ route, navigation }) => {
         renderBubble={renderBubble}
         onSend={messages => onSend(messages)}
         user={{
-          _id: 1
+          _id: route.params.id
         }}
       />
       { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
