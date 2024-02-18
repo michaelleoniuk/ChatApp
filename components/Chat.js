@@ -14,23 +14,23 @@ const Chat = ({ route, navigation, db }) => {
   // Given title of the screen
 
   useEffect(() => {
-    navigation.setOptions({ title: username });
-
-    const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
-    const message = onSnapshot(q,
-       (documentSnapshot) => {
-        let newMessages = [];
-        documentSnapshot.forEach(doc => {
-           newMessages.push({ id: doc.id, ...doc.data(), createdAt: new Date(doc.data().createdAt.toMillis())})
-        });
-        setMessages(newMessages);
-       })
-
-       return () => {
-         if( message ) message();
-       };
-
-  }, []);
+    navigation.setOptions({ title: name });
+    const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+    const unsubMessages = onSnapshot(q, (docs) => {
+      let newMessages = [];
+      docs.forEach(doc => {
+        newMessages.push({
+          id: doc.id,
+          ...doc.data(),
+          createdAt: new Date(doc.data().createdAt.toMillis())
+        })
+      })
+      setMessages(newMessages);
+    })
+    return () => {
+      if (unsubMessages) unsubMessages();
+    }
+   }, []);
 
   // Send a message function
 
