@@ -4,7 +4,7 @@ import { GiftedChat, Bubble } from "react-native-gifted-chat";
 import { collection, addDoc, onSnapshot, orderBy, query } from "firebase/firestore";
 
 const Chat = ({ route, navigation, db }) => {
-    const { name, background, userID } = route.params;
+    const { name, background, id } = route.params;
     const [messages, setMessages] = useState([]);
     const onSend = (newMessages) => {
       addDoc(collection(db, "messages"), newMessages[0])
@@ -60,7 +60,7 @@ const Chat = ({ route, navigation, db }) => {
               onSend={messages => onSend(messages)}
               user={{
                 //_id: route.params.id,
-                _id: userID,
+                _id: id,
                 name
               }}
             />

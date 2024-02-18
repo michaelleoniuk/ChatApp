@@ -12,7 +12,7 @@ const Start = ({ navigation }) => {
   const signInUser = () => {
     signInAnonymously(auth)
     .then( result => {
-      navigation.navigate('Chat', {name: username, color: selectedColor, id: result.user.uid});
+      navigation.navigate('Chat', {name: name, color: selectedColor, id: result.user.uid});
       Alert.alert('Signed in succeccfully');
     }).catch((error) => {
       Alert.alert('Unable to signin, try later');
@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
   text: {
     padding: '25%',
     flex: 6,
-    fontFamily: 'Poppins-ExtraBold',
     fontSize: 45,
     fontWeight: '600',
     color: 'white',
