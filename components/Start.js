@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ImageBackground, StyleSheet, View, Text, TextInput, Button, Image, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { useState } from 'react';
+import { ImageBackground, StyleSheet, View, Text, TextInput, Button, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import {getAuth, signInAnonymously} from 'firebase/auth';
 
 const Start = ({ navigation }) => {
