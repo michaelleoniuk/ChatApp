@@ -6,13 +6,11 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import {disableNetwork} from "firebase/firestore";
 import {enableNetwork} from "firebase/firestore";
-import { useEffect } from "react";
+import {useEffect} from "react";
 import {Alert} from "react-native";
 import {useNetInfo} from "@react-native-community/netinfo";
-import {AsyncStorage} from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
@@ -59,7 +57,7 @@ return (
            {...props}
           />
           )}
-          
+
       </Stack.Screen>
     </Stack.Navigator>
   </NavigationContainer>
