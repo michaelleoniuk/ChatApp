@@ -13,19 +13,6 @@ import {useEffect} from "react";
 import {Alert} from "react-native";
 import {useNetInfo} from "@react-native-community/netinfo";
 
-const Stack = createNativeStackNavigator();
-
-const connectionStatus = useNetInfo();
-
-  useEffect(() => {
-    if (connectionStatus.isConnected === false) {
-      Alert.alert("Connection Lost!");
-      disableNetwork(db);
-    } else if (connectionStatus.isConnected === true) {
-      enableNetwork(db);
-    }
-  }, [connectionStatus.isConnected]);
-
 const App = () => {
 
 const firebaseConfig = {
@@ -40,6 +27,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 const storage = getStorage(app);
+
+const Stack = createNativeStackNavigator();
+
+const connectionStatus = useNetInfo();
+
+  useEffect(() => {
+    if (connectionStatus.isConnected === false) {
+      Alert.alert("Connection Lost!");
+      disableNetwork(db);
+    } else if (connectionStatus.isConnected === true) {
+      enableNetwork(db);
+    }
+  }, [connectionStatus.isConnected]);
 
 return (
   <NavigationContainer>
