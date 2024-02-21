@@ -42,28 +42,28 @@ const Start = ({ navigation }) => {
           <TouchableOpacity
               style={[
                 styles.colorButton,
-                { backgroundColor: '#090C08', opacity: selectedColor === '#090C08' ? 1 : 0.7 },
+                { backgroundColor: '#090C08'}
               ]}
               onPress={() => handleColorSelection('#090C08')}
             />
             <TouchableOpacity
               style={[
                 styles.colorButton,
-                { backgroundColor: '#474056', opacity: selectedColor === '#474056' ? 1 : 0.7 },
+                { backgroundColor: '#474056'}
               ]}
               onPress={() => handleColorSelection('#474056')}
             />
             <TouchableOpacity
               style={[
                 styles.colorButton,
-                { backgroundColor: '#8A95A5', opacity: selectedColor === '#8A95A5' ? 1 : 0.7 },
+                { backgroundColor: '#8A95A5'}
               ]}
               onPress={() => handleColorSelection('#8A95A5')}
             />
             <TouchableOpacity
               style={[
                 styles.colorButton,
-                { backgroundColor: '#B9C6AE', opacity: selectedColor === '#B9C6AE' ? 1 : 0.7 },
+                { backgroundColor: '#B9C6AE'}
               ]}
               onPress={() => handleColorSelection('#B9C6AE')}
             />
@@ -129,38 +129,36 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: -10,
-    marginBottom: 10,
-    opacity: '50%',
+    marginBottom: 10
   },
   icon: {
     width: 20,
     height: 20,
-    marginRight: 10,
+    marginRight: 10
   },
   text1: {
     fontSize: 16,
     color: '#757083',
     fontWeight: '300',
-    opacity: 1,
-    marginTop: 10,
+    marginTop: 10
   },
   colorButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 20,
+    margin: 20
   },
   colorButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    margin: 10,
+    margin: 10
   },
   buttonStartChatting: {
     backgroundColor: '#757083',
     borderRadius: 8,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginTop: 10,
+    marginTop: 10
   },
   button: {
     backgroundColor: '#090C08' 
