@@ -42,28 +42,28 @@ const Start = ({ navigation }) => {
           <TouchableOpacity
               style={[
                 styles.colorButton,
-                { backgroundColor: '#090C08'}
+                { backgroundColor: '#090C08', opacity: selectedColor === '#090C08' ? 1 : 0.7 },
               ]}
               onPress={() => handleColorSelection('#090C08')}
             />
             <TouchableOpacity
               style={[
                 styles.colorButton,
-                { backgroundColor: '#474056'}
+                { backgroundColor: '#474056', opacity: selectedColor === '#474056' ? 1 : 0.7 },
               ]}
               onPress={() => handleColorSelection('#474056')}
             />
             <TouchableOpacity
               style={[
                 styles.colorButton,
-                { backgroundColor: '#8A95A5'}
+                { backgroundColor: '#8A95A5', opacity: selectedColor === '#8A95A5' ? 1 : 0.7 },
               ]}
               onPress={() => handleColorSelection('#8A95A5')}
             />
             <TouchableOpacity
               style={[
                 styles.colorButton,
-                { backgroundColor: '#B9C6AE'}
+                { backgroundColor: '#B9C6AE', opacity: selectedColor === '#B9C6AE' ? 1 : 0.7 },
               ]}
               onPress={() => handleColorSelection('#B9C6AE')}
             />
