@@ -77,5 +77,13 @@ This App uses below dependencies:
 - expo-async-storage: Asynchronous, persistent key-value storage
 
 3. Configure Firebase
+- Sign in at Google Firebase
+- Create a Project (uncheck "Enable Google Analytics for this project")
+- Create Database in Firestore Database (choose a close region from the dropdown, and "Start in production mode")
+- Adjust rules from allow read, write: if false;  to allow read, write: if true; 
+- "Register app(</>)" in "Project Overview"
+- Navigate to the chat-app folder and install the Firebase using npm install firebase 
+- Initialize Firebase by copying and pasting the provided Firebase configuration into the App.js
 
-4. Run the App on emulator or physical device.
+4. Download Android Studio on your computer or use the Expo Go App on your mobile device
+- Run npx expo start in your terminal
