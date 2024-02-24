@@ -1,28 +1,33 @@
+// Import necessary modules and components from libraries
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 
+// CustomActions component definition
 const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) => {
-const generateReference = (uri) => {
-const timeStamp = new Date().getTime();
-const imageName = uri.split("/")[uri.split("/").length - 1];
-  
-return `${userID}-${timeStamp}-${imageName}`;
-};
 
-const uploadAndSendImage = async (imageURI) => {
-const uniqueRefString = generateReference(imageURI);
-const newUploadRef = ref(storage, uniqueRefString);
-const response = await fetch(imageURI);
-const blob = await response.blob();
+  // Function to generate a unique reference for the uploaded image
+  const generateReference = (uri) => {
+    const timeStamp = new Date().getTime();
+    const imageName = uri.split("/")[uri.split("/").length - 1];
+    return `${userID}-${timeStamp}-${imageName}`;
+  };
+
+  // Function to upload image and send its URL
+  const uploadAndSendImage = async (imageURI) => {
+    const uniqueRefString = generateReference(imageURI);
+    const newUploadRef = ref(storage, uniqueRefString);
+    const response = await fetch(imageURI);
+    const blob = await response.blob();
     uploadBytes(newUploadRef, blob).then(async (snapshot) => {
       const imageURL = await getDownloadURL(snapshot.ref);
       onSend({ image: imageURL });
     });
   };
 
+  // Function to pick an image from the device's library
   const pickImage = async () => {
     let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissions?.granted) {
@@ -32,6 +37,7 @@ const blob = await response.blob();
     }
   };
 
+  // Function to take a photo using the device's camera
   const takePhoto = async () => {
     let permissions = await ImagePicker.requestCameraPermissionsAsync();
     if (permissions?.granted) {
@@ -41,6 +47,7 @@ const blob = await response.blob();
     }
   };
 
+  // Function to get the current device location
   const getLocation = async () => {
     let permissions = await Location.requestForegroundPermissionsAsync();
     if (permissions?.granted) {
@@ -56,7 +63,10 @@ const blob = await response.blob();
     } else Alert.alert("Permissions haven't been granted.");
   };
 
+  // Hook to use the action sheet for presenting options
   const actionSheet = useActionSheet();
+
+  // Function to handle action press from the action sheet
   const onActionPress = () => {
     const options = [
       "Choose From Library",
@@ -86,15 +96,26 @@ const blob = await response.blob();
     );
   };
 
+  // Render component
   return (
-    <TouchableOpacity style={styles.container} onPress={onActionPress}>
-      <View style={[styles.wrapper, wrapperStyle]}>
-        <Text style={[styles.iconText, iconTextStyle]}>+</Text>
-      </View>
+
+    <TouchableOpacity 
+      style={styles.container} 
+      onPress={onActionPress}
+      accessible={true}
+      accessibilityLabel="This is an input field with a clickable icon that expands a menu"
+      accessibilityHint="Choose what type of media you want to share or cancel to collapse menu"
+      accessibilityRole="button"
+    >
+    >
+     <View style={[styles.wrapper, wrapperStyle]}>
+      <Text style={[styles.iconText, iconTextStyle]}>+</Text>
+     </View>
     </TouchableOpacity>
   );
 };
 
+// Styles for the CustomActions component
 const styles = StyleSheet.create({
   container: {
     width: 26,
@@ -117,4 +138,5 @@ const styles = StyleSheet.create({
   },
 });
 
+// Export the CustomActions component
 export default CustomActions;
