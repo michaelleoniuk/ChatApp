@@ -6,13 +6,19 @@ import { collection, addDoc, onSnapshot, orderBy, query } from "firebase/firesto
 import CustomActions from "./CustomActions";
 import MapView from "react-native-maps";
 
+// Chat component
 const Chat = ({ route, navigation, db, isConnected, storage }) => {
+    // Destructuring route.params
     const { name, background, id } = route.params;
+    // State to manage messages
     const [messages, setMessages] = useState([]);
+
+    // Function to handle sending messages
     const onSend = (newMessages) => {
       addDoc(collection(db, "messages"), newMessages[0])
     }
 
+    // Function to customize the appearance of chat bubbles
     const renderBubble = (props) => {
       return <Bubble
         {...props}
@@ -27,11 +33,13 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
       />
     }
 
+    // Function to load cached messages from AsyncStorage
     const loadCachedMessages = async () => {
       const cachedMessages = (await AsyncStorage.getItem("messages")) || [];
-      setLists(JSON.parse(cachedMessages));
+      setLists(JSON.parse(cachedMessages)); // setLists is undefined here, it should be setMessages
     };
   
+    // Function to cache messages using AsyncStorage
     const cacheMessages = async (messagesToCache) => {
       try {
         await AsyncStorage.setItem("messages", JSON.stringify(messagesToCache));
@@ -40,12 +48,15 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
       }
     };
 
+    // Variable to hold unsubscribe function
     let unsubMessages;
 
+    // Effect hook to set navigation title
     useEffect(() => {
         navigation.setOptions({ title: name });
     }, []);
 
+    // Effect hook to listen for changes in messages collection
     useEffect(() => {
       if (isConnected === true) {
         if (unsubMessages) unsubMessages();
@@ -77,15 +88,18 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
       }
     }, []);
 
+    // Function to render input toolbar based on connectivity
     const renderInputToolbar = (props) => {
       if (isConnected) return <InputToolbar {...props} />;
       else return null;
     };
 
+    // Function to render custom actions component
     const renderCustomActions = (props) => {
       return <CustomActions storage={storage} {...props} />;
     };
   
+    // Function to render custom view for location messages
     const renderCustomView = (props) => {
       const { currentMessage } = props;
       if (currentMessage.location) {
@@ -104,6 +118,7 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
       return null;
     };
 
+    // JSX to render GiftedChat component
     return (
         <View style={[styles.container, {backgroundColor: background}]}>
             <GiftedChat
@@ -123,9 +138,13 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
         </View>
         )
 }
+
+// Styles for the Chat component
 const styles = StyleSheet.create({
  container: {
   flex: 1,
  },
 });
+
+// Exporting the Chat component as default
 export default Chat;
